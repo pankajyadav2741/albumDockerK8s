@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: album
+  labels:
+    name: album-service
+    app: album-app
+spec:
+  selector:
+    name: album-pod
+    app: album-app
+  ports:
+    - port: 80
+      targetPort: 5000
+      nodePort: 32000
+  type: NodePort
