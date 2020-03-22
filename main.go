@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
 	"github.com/gocql/gocql"
 	"github.com/gorilla/mux"
 	"github.com/kelseyhightower/envconfig"
@@ -41,7 +42,7 @@ func init() {
 	if err := Session.Query(`CREATE KEYSPACE ? IF NOT EXISTS WITH replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };`, cluster.Keyspace).Exec(); err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Fprintf(w, "")
+		fmt.Println("Keyspace created")
 	}
 
 	//Use Keyspace
@@ -53,7 +54,7 @@ func init() {
 	if err := Session.Query(`CREATE TABLE IF NOT EXISTS albumtable(albname TEXT PRIMARY KEY, imagelist LIST<TEXT>);`).Exec(); err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Fprintf(w, "Table albumtable created")
+		fmt.Println("Table albumtable created")
 	}
 }
 
