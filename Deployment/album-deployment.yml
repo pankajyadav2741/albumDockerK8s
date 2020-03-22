@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: album
-          image: pankajyadav2741/go-album:1.0
+          image: pankajyadav2741/go-album:2.0
           ports:
             - containerPort: 5000
           env:
