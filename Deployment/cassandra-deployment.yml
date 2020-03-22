@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cassandra-db-deployment
+  labels:
+    app: cassandra
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: cassandra-db-pod
+      app: album-app
+  template:
+    metadata:
+      name: cassandra-db-pod
+      labels:
+        name: cassandra-db-pod
+        app: album-app
+    spec:
+      containers:
+        - name: cassandra-db
+          image: cassandra
+          ports:
+            - containerPort: 7000
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
