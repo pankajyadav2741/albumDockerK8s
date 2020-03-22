@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: album-deployment
+  labels:
+    app: album
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: album-pod
+      app: album-app
+  template:
+    metadata:
+      name: album-pod
+      labels:
+        name: album-pod
+        app: album-app
+    spec:
+      containers:
+        - name: album
+          image: pankajyadav2741/go-album:1.0
+          ports:
+            - containerPort: 5000
