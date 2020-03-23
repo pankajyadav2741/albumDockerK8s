@@ -1,0 +1,290 @@
+---
+swagger: "2.0"
+info:
+  description: Album API creates/deletes/displays albums and images in the albums, making use of REST APIs and persistent storage..
+  version: 1.0.0
+  title: Album
+host: clusterIP:32000
+basePath: /
+schemes:
+- https
+- http
+paths:
+  /:
+    get:
+      summary: Displays the list of albums.
+      description: |
+        Displays the list of albums.
+
+        For example:
+        ```
+        GET /
+        ```
+
+        Returns albums:
+        ```
+        [
+            {
+                "name": "album1",
+                "image": [
+                    {
+                        "name": "image1"
+                    }
+                ]
+            },
+            {
+                "name": "album2",
+                "image": [
+                    {
+                        "name": "image3"
+                    }
+                ]
+            }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Fetching list of albums is successful.
+  /{albumname}:
+    get:
+      summary: Displays all the images in the specified album.
+      description: |
+        Displays all the images in the specified album.
+
+        For example:
+        ```
+        GET /album1
+        ```
+
+        Returns albums:
+        ```
+        {
+            "name": "album1",
+            "image": [
+                {
+                    "name": "image1"
+                },
+                {
+                    "name": "image2"
+                }
+            ]
+        }
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: albumname
+        in: path
+        description: Name of the album under which all images should be displayed.
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Fetching list of images in an album is successful.
+    post:
+      summary: Creates a specified album.
+      description: |
+        Creates a specified album.
+
+        For example:
+        ```
+        POST /album1
+        POST /album2
+        ```
+
+        Returns albums:
+        ```
+        [
+            {
+                "name": "album1",
+                "image": null
+            },
+            {
+                "name": "album2",
+                "image": null
+            }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: albumname
+        in: path
+        description: Name of the album to be created
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Specified album created
+    delete:
+      summary: Deletes specified album.
+      description: |
+        Deletes a specified album.
+
+        For example:
+        ```
+        DELETE /album2
+        ```
+
+        Returns albums:
+        ```
+        [
+            {
+                "name": "album1",
+                "image": [
+                    {
+                        "name": "image1"
+                    }
+                ]
+            }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: albumname
+        in: path
+        description: Name of the album to be deleted
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Successfully deleted the specified album.
+  /{albumname}/{imagename}:
+    get:
+      summary: Displays a specified image in a specified album.
+      description: |
+        Displays a specified image in a specified album.
+
+        For example:
+        ```
+        GET /album1/image2
+        ```
+
+        Returns image:
+        ```
+        [
+            {
+                "name": "image2"
+            }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: albumname
+        in: path
+        description: Name of the album under which image to be displayed
+        required: true
+        type: string
+      - name: imagename
+        in: path
+        description: Name of the image to be displayed
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Fetching specified image in the specified album successful.
+    post:
+      summary: Creates a new image in the specified album.
+      description: |
+        Creates a new image in the specified album.
+
+        For example:
+        ```
+        POST /album1/image1
+        POST /album1/image2
+        POST /album2/image3
+        ```
+
+        Returns albums:
+        ```
+        [
+            {
+                "name": "album1",
+                "image": [
+                    {
+                        "name": "image1"
+                    },
+                    {
+                        "name": "image2"
+                    }
+                ]
+            },
+            {
+                "name": "album2",
+                "image": [
+                    {
+                        "name": "image3"
+                    }
+                ]
+            }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: albumname
+        in: path
+        description: Name of the album under which image to be created
+        required: true
+        type: string
+      - name: imagename
+        in: path
+        description: Name of the image to be created
+        required: true
+        type: string
+      responses:
+        "200":
+          description: New image created in specified album.
+    delete:
+      summary: Deletes a specified image in a specified album.
+      description: |
+        Deletes a specified image in a specified album.
+
+        For example:
+        ```
+        DELETE /album1/image2
+        ```
+
+        Returns albums:
+        ```
+        [
+            {
+                "name": "album1",
+                "image": [
+                    {
+                        "name": "image1"
+                    }
+                ]
+            },
+            {
+                "name": "album2",
+                "image": [
+                    {
+                        "name": "image3"
+                    }
+                ]
+            }
+        ]
+        ```
+      produces:
+      - application/json
+      parameters:
+      - name: albumname
+        in: path
+        description: Name of the album under which image to be deleted
+        required: true
+        type: string
+      - name: imagename
+        in: path
+        description: Name of the image to be deleted
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Specified image deleted in the specified album.
+definitions: {}
