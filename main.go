@@ -20,17 +20,21 @@ type Image struct {
 	Name string `json:"name"`
 }
 
+type dbhost struct {
+	host string
+}
+
 var albums []Albums
 var Session *gocql.Session
 
 func init() {
-	var host string
-	err := envconfig.Process("DB_HOST", host)
+	var db dbhost
+	err := envconfig.Process("DB_HOST", &db)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	cluster := gocql.NewCluster(host)
+	cluster := gocql.NewCluster(db.host)
 	cluster.Keyspace = "albumspace"
 	Session, err := cluster.CreateSession()
 	if err != nil {
@@ -170,5 +174,5 @@ func main() {
 	myRouter.HandleFunc("/{album}/{image}", addImage).Methods(http.MethodPost)
 	//Delete an image in an album
 	myRouter.HandleFunc("/{album}/{image}", deleteImage).Methods(http.MethodDelete)
-	log.Fatal(http.ListenAndServe(":8085", myRouter))
+	log.Fatal(http.ListenAndServe(":5000", myRouter))
 }
