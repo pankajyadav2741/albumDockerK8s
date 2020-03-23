@@ -8,6 +8,7 @@ import (
 
 	"github.com/gocql/gocql"
 	"github.com/gorilla/mux"
+	"github.com/kelseyhightower/envconfig"
 )
 
 type Albums struct {
@@ -19,11 +20,21 @@ type Image struct {
 	Name string `json:"name"`
 }
 
+type dbhost struct {
+	host string
+}
+
 var albums []Albums
 var Session *gocql.Session
 
 func init() {
-	cluster := gocql.NewCluster("127.0.0.1")
+	var db dbhost
+	err := envconfig.Process("DB_HOST", &db)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	cluster := gocql.NewCluster(db.host)
 	cluster.Keyspace = "albumspace"
 	Session, err := cluster.CreateSession()
 	if err != nil {
@@ -32,14 +43,14 @@ func init() {
 	fmt.Println("Cassandra init done")
 
 	//Create Keyspace
-	if err := Session.Query(`CREATE KEYSPACE IF NOT EXISTS %s WITH replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };`, cluster.Keyspace); err != nil {
+	if err := Session.Query(`CREATE KEYSPACE ? IF NOT EXISTS WITH replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };`, cluster.Keyspace).Exec(); err != nil {
 		fmt.Println(err)
 	} else {
 		fmt.Println("Keyspace created")
 	}
 
 	//Create Table albumtable
-	if err := Session.Query(`CREATE TABLE IF NOT EXISTS albumtable(albname TEXT PRIMARY KEY, imagelist LIST<TEXT>);`,cluster.Keyspace).Exec(); err != nil {
+	if err := Session.Query(`CREATE TABLE IF NOT EXISTS albumtable(albname TEXT PRIMARY KEY, imagelist LIST<TEXT>);`).Exec(); err != nil {
 		fmt.Println(err)
 	} else {
 		fmt.Println("Table albumtable created")
