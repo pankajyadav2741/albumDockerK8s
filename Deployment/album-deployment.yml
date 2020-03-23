@@ -24,7 +24,7 @@ spec:
             - containerPort: 5000
           env:
             - name: DB_HOST
-              value: cassandra-db-pod
+              value: cassandra.default.svc.cluster.local
           resources:
             limits:
               cpu: "1"

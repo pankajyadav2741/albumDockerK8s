@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: cassandra
   labels:
-    name: cassandra-service
+    name: cassandra
     app: album-app
 spec:
   selector:

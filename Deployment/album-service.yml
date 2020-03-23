@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: album
   labels:
-    name: album-service
+    name: album
     app: album-app
 spec:
   selector:
