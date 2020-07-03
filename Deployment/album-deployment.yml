@@ -1,30 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: album-deployment
+  name: album
   labels:
     app: album
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      name: album-pod
-      app: album-app
+      app: album
   template:
     metadata:
-      name: album-pod
       labels:
-        name: album-pod
-        app: album-app
+        app: album
     spec:
       containers:
         - name: album
           image: pankajyadav2741/go-album:2.0
           ports:
-            - containerPort: 5000
+          - containerPort: 5000
           env:
             - name: DB_HOST
-              value: cassandra.default.svc.cluster.local
+              value: cassandra
           resources:
             limits:
               cpu: "1"
