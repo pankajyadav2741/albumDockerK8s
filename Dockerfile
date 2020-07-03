@@ -1,4 +1,4 @@
-FROM golang:alpine AS base
+FROM golang:1.14.1-alpine3.11 AS base
 
 LABEL maintainer="Pankaj Yadav <pankajyadav2741@gmail.com>"
 
