@@ -3,12 +3,10 @@ kind: Service
 metadata:
   name: album
   labels:
-    name: album
-    app: album-app
+    app: album
 spec:
   selector:
-    name: album-pod
-    app: album-app
+    app: album
   ports:
     - port: 80
       targetPort: 5000
