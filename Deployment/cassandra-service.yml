@@ -1,14 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cassandra
   labels:
-    name: cassandra
-    app: album-app
+    app: cassandra
+  name: cassandra
 spec:
-  selector:
-    name: cassandra-db-pod
-    app: album-app
+  clusterIP: None
   ports:
-    - port: 7000
-      targetPort: 7000
+  - port: 9042
+  selector:
+    app: cassandra
